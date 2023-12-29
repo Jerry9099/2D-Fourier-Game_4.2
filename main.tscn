@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://dbwukde68m2cf"]
+
+[ext_resource type="Script" path="res://Main.cs" id="1_867so"]
+[ext_resource type="Texture2D" uid="uid://3smoda5noues" path="res://icon.svg" id="1_f30lx"]
+[ext_resource type="Shader" path="res://test.gdshader" id="2_2hwuy"]
+[ext_resource type="Texture2D" uid="uid://dwtpyyu3qcrso" path="res://fill - 256.png" id="2_463h8"]
+[ext_resource type="Script" path="res://SubViewportContainer.gd" id="5_bcqo7"]
+[ext_resource type="Script" path="res://SubViewport_viewer.gd" id="5_rdm2i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bj2oa"]
+shader = ExtResource("2_2hwuy")
+shader_parameter/phlash_speed = 3.0
+shader_parameter/spin_speed = 20.0
+shader_parameter/spin_radius = 5.0
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_867so")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(580, 328)
+scale = Vector2(10.0625, 6.125)
+texture = ExtResource("1_f30lx")
+
+[node name="FFT" type="Sprite2D" parent="."]
+position = Vector2(697, 306)
+texture = ExtResource("2_463h8")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 256.0
+offset_bottom = 256.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport"]
+material = SubResource("ShaderMaterial_bj2oa")
+scale = Vector2(2, 2)
+texture = ExtResource("1_f30lx")
+centered = false
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
+visibility_layer = 2
+offset_left = 149.0
+offset_top = 332.0
+offset_right = 405.0
+offset_bottom = 588.0
+script = ExtResource("5_bcqo7")
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
+handle_input_locally = false
+canvas_cull_mask = 4294967293
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+script = ExtResource("5_rdm2i")
+
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer2/SubViewport"]
+zoom = Vector2(2, 2)
