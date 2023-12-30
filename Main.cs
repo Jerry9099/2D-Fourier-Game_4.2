@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 
-public partial class Main : Node2D
+public partial class Main : Control
 {	
 	
 	// Called when the node enters the scene tree for the first time.
@@ -35,8 +35,8 @@ public partial class Main : Node2D
 		{
 			for (int j = 0; j < N; j++)
 			{
-				float b = importImage.GetPixel(i, j).B;
-				data[i, j] = new AForge.Math.Complex(b*255, 0);  //SCALE UP LATER? precision limited?
+				float v = (importImage.GetPixel(i, j).R + importImage.GetPixel(i, j).G + importImage.GetPixel(i, j).B) / 3;  //avg, NOOB greyscale - IMPROVE?
+				data[i, j] = new AForge.Math.Complex(v*255, 0);  //SCALE UP LATER? precision limited?
 				//GD.Print(data[i, j]);
 			}
 		}
@@ -92,6 +92,6 @@ public partial class Main : Node2D
 		}
 
 		//set FFT Texture to final image
-		GetNode<Sprite2D>("FFT").Texture = ImageTexture.CreateFromImage(outImage);
+		GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/FFT").Texture = ImageTexture.CreateFromImage(outImage);
 	}
 }
