@@ -6,6 +6,7 @@ using AForge.Math;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.IO;
 
 public partial class Main : Control
 {	
@@ -13,12 +14,15 @@ public partial class Main : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		GetNode<FileDialog>("FileDialog").FileMode = FileDialog.FileModeEnum.OpenFile;
+		//GetNode<FileDialog>("FileDialog").Access = FileDialog.AccessEnum.Userdata;
+		GetNode<FileDialog>("FileDialog").FileSelected += OnFileSelected; 
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Image importImage = GetNode<SubViewport>("SubViewportContainer2/SubViewport").GetTexture().GetImage();
+		Image importImage = GetNode<SubViewport>("MovableViewer/SubViewport").GetTexture().GetImage();
 		//Image importImage = new Image();
 		Generate_FFT(importImage);
 		//get_node("FFT_Display").texture = ImageTexture.create_from_image(dynImage);
@@ -93,5 +97,11 @@ public partial class Main : Control
 
 		//set FFT Texture to final image
 		GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/FFT").Texture = ImageTexture.CreateFromImage(outImage);
+	}
+
+
+	private void OnFileSelected(String path)
+	{
+		return; //load that shit
 	}
 }

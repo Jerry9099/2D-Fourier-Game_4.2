@@ -135,3 +135,8 @@ script = ExtResource("5_rdm2i")
 
 [node name="Camera2D" type="Camera2D" parent="MovableViewer/SubViewport"]
 zoom = Vector2(2, 2)
+
+[node name="FileDialog" type="FileDialog" parent="."]
+initial_position = 1
+size = Vector2i(482, 379)
+visible = true
