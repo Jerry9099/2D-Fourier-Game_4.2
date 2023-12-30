@@ -10,11 +10,13 @@ using System.IO;
 
 public partial class Main : Control
 {	
-	
+	FileDialog filedialog = new FileDialog();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GetNode<FileDialog>("FileDialog").FileSelected += OnFileSelected; 
+		filedialog = GetNode<FileDialog>("FileDialog");
+		filedialog.FileSelected += OnFileSelected; 
+		GetNode<Button>("Buttons/Upload").Pressed += OnFileButtonLoad; 
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -101,5 +103,10 @@ public partial class Main : Control
 	private void OnFileSelected(String path)
 	{
 		return; //load that shit
+	}
+
+	private void OnFileButtonLoad()
+	{
+		filedialog.Show();
 	}
 }

@@ -140,6 +140,26 @@ zoom = Vector2(2, 2)
 title = "Open a File"
 initial_position = 1
 size = Vector2i(482, 379)
-visible = true
 ok_button_text = "Open"
 file_mode = 0
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -149.5
+offset_top = 11.0
+offset_right = 147.5
+offset_bottom = 51.0
+grow_horizontal = 2
+theme_override_constants/separation = 35
+
+[node name="Upload" type="Button" parent="Buttons"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Upload Image"
+
+[node name="Viewfinder" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Toggle Viewfinder"
