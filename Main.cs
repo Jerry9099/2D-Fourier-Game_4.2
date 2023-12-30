@@ -14,8 +14,6 @@ public partial class Main : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GetNode<FileDialog>("FileDialog").FileMode = FileDialog.FileModeEnum.OpenFile;
-		//GetNode<FileDialog>("FileDialog").Access = FileDialog.AccessEnum.Userdata;
 		GetNode<FileDialog>("FileDialog").FileSelected += OnFileSelected; 
 	}
 
