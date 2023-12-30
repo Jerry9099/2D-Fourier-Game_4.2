@@ -1,0 +1,114 @@
+[gd_scene load_steps=2 format=3 uid="uid://u6aeg7k3y61y"]
+
+[ext_resource type="Texture2D" uid="uid://3smoda5noues" path="res://icon.svg" id="1_6mgpu"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+anchor_left = 0.241
+anchor_top = 0.59
+anchor_right = 0.241
+anchor_bottom = 0.59
+offset_left = -136.632
+offset_top = -71.32
+offset_right = 137.368
+offset_bottom = 71.68
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_top = 2.0
+offset_right = 1151.0
+offset_bottom = 646.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Button2" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button3" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button4" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button2" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button3" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button4" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Button4" type="Button" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button5" type="Button" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button6" type="Button" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button7" type="Button" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button8" type="Button" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button9" type="Button" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button10" type="Button" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button11" type="Button" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="Button13" type="Button" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Click Me ! Oh it sizes automatically"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+value = 50.0
+texture_progress = ExtResource("1_6mgpu")
+
+[node name="FileDialog" type="FileDialog" parent="HBoxContainer"]
+position = Vector2i(0, 36)
+size = Vector2i(392, 159)

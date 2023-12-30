@@ -16,14 +16,22 @@ shader_parameter/spin_radius = 5.0
 [node name="Main" type="Node2D"]
 script = ExtResource("1_867so")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(580, 328)
-scale = Vector2(10.0625, 6.125)
-texture = ExtResource("1_f30lx")
-
 [node name="FFT" type="Sprite2D" parent="."]
 position = Vector2(697, 306)
 texture = ExtResource("2_463h8")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1155.0
+offset_bottom = 649.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+offset_right = 1150.0
+offset_bottom = 649.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 offset_right = 256.0
@@ -57,3 +65,22 @@ script = ExtResource("5_rdm2i")
 
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainer2/SubViewport"]
 zoom = Vector2(2, 2)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control2" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchor_right = 0.109375
+anchor_bottom = 0.20216
+offset_left = 172.0
+offset_top = 379.0
+offset_right = 172.0
+offset_bottom = 379.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="Sprite2D" parent="CanvasLayer/Control2"]
+position = Vector2(58.5, 63)
+scale = Vector2(1.05469, 1.09375)
+texture = ExtResource("1_f30lx")
