@@ -10,19 +10,29 @@ using System.IO;
 
 public partial class Main : Control
 {	
-	FileDialog filedialog = new FileDialog();
+	FileDialog file_dialog = new FileDialog();
+	Sprite2D input_sprite = new Sprite2D();
+	TextureRect fft = new TextureRect();
+	static String movable_viewport_path = "MovableViewer/SubViewport";
+	static String import_viewport_path = "VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport";
+	static String input_sprite_path = "VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport/InputTexture";
+	static String viewport_path = movable_viewport_path;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		filedialog = GetNode<FileDialog>("FileDialog");
-		filedialog.FileSelected += OnFileSelected; 
+		file_dialog = GetNode<FileDialog>("FileDialog");
+		input_sprite = GetNode<Sprite2D>(input_sprite_path);
+		fft = GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/FFT");
+		file_dialog.FileSelected += OnFileSelected; 
 		GetNode<Button>("Buttons/Upload").Pressed += OnFileButtonLoad; 
+		GetNode<Button>("Buttons/ViewFinder").Pressed += OnViewFinderButtonPress;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Image importImage = GetNode<SubViewport>("MovableViewer/SubViewport").GetTexture().GetImage();
+		Image importImage = GetNode<SubViewport>(viewport_path).GetTexture().GetImage();
 		//Image importImage = new Image();
 		Generate_FFT(importImage);
 		//get_node("FFT_Display").texture = ImageTexture.create_from_image(dynImage);
@@ -96,17 +106,32 @@ public partial class Main : Control
 		}
 
 		//set FFT Texture to final image
-		GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/FFT").Texture = ImageTexture.CreateFromImage(outImage);
+		fft.Texture = ImageTexture.CreateFromImage(outImage);
 	}
 
 
 	private void OnFileSelected(String path)
 	{
-		return; //load that shit
+		Image image = Image.LoadFromFile(path);
+		input_sprite.Texture = ImageTexture.CreateFromImage(image);
 	}
 
 	private void OnFileButtonLoad()
 	{
-		filedialog.Show();
+		file_dialog.Show();
 	}
+
+	private void OnViewFinderButtonPress()
+	{
+		if ( viewport_path.Equals(movable_viewport_path) )
+		{
+			viewport_path = import_viewport_path;
+		}
+
+		else
+		{
+			viewport_path = movable_viewport_path;
+		}
+	}
+	
 }
