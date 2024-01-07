@@ -78,18 +78,20 @@ public partial class Main : Control
 		// }
 
 		// //set results into Image - SHIFTED
+
+		int mag = 2;
 		for (int i = 0; i < N/2; i++)  //left half
 		{
 			for (int j = 0; j < N/2; j++) //top left half
 			{
-				float a = 10*(float)data[j,i].Re;
+				float a = mag*(float)data[j,i].Magnitude;
 				Color c = new Color(a, a, a);
 				outImage.SetPixel(N/2-i-1, N/2-j-1, c);
 			}
 
 			for (int j = N-1; j > N/2-1; j--) //bottom left half
 			{
-				float a = 10*(float)data[j, i].Re;
+				float a = mag*(float)data[j, i].Magnitude;
 				Color c = new Color(a, a, a);
 				outImage.SetPixel(N/2-i-1, N-j-1+ N/2, c);
 			}
@@ -99,14 +101,14 @@ public partial class Main : Control
 		{
 			for (int j = 0; j < N/2; j++) //top left half
 			{
-				float a = 10*(float)data[j,i].Re;
+				float a = mag*(float)data[j,i].Magnitude;
 				Color c = new Color(a, a, a);
 				outImage.SetPixel(N-i-1 + N/2, N/2-j-1, c);
 			}
 
 			for (int j = N-1; j > N/2-1; j--) //bottom left half
 			{
-				float a = 10*(float)data[j, i].Re;
+				float a = mag*(float)data[j, i].Magnitude;
 				Color c = new Color(a, a, a);
 				outImage.SetPixel(N-i-1 + N/2, N-j-1+ N/2, c);
 			}
