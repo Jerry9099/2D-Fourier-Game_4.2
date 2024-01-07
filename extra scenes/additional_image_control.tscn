@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dx1om231to76p"]
+
+[ext_resource type="Shader" path="res://test.gdshader" id="1_7iuqt"]
+[ext_resource type="Texture2D" uid="uid://3smoda5noues" path="res://icon.svg" id="2_paiq0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bj2oa"]
+shader = ExtResource("1_7iuqt")
+shader_parameter/phlash_speed = 3.0
+shader_parameter/spin_speed = 20.0
+shader_parameter/spin_radius = 5.0
+
+[node name="AdditionalImageControl" type="Control"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AdditionalTexture" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_bj2oa")
+scale = Vector2(2, 2)
+texture = ExtResource("2_paiq0")
+centered = false
