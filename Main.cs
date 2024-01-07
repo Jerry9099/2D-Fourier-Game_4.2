@@ -12,6 +12,7 @@ public partial class Main : Control
 {	
 	FileDialog file_dialog = new FileDialog();
 	Sprite2D import_sprite = new Sprite2D();
+	Camera2D import_camera = new Camera2D();
 	TextureRect fft = new TextureRect();
 	//static String movable_viewport_path = "MovableViewer/SubViewport";
 	static String import_viewport_path = "VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport";
@@ -23,11 +24,15 @@ public partial class Main : Control
 	{
 		file_dialog = GetNode<FileDialog>("FileDialog");
 		import_sprite = GetNode<Sprite2D>(import_sprite_path);
+		import_camera = GetNode<Camera2D>(import_viewport_path + "/Camera2D");
 		fft = GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/FFT");
+
 		file_dialog.FileSelected += OnFileSelected; 
 		GetNode<Button>("Buttons/Upload").Pressed += OnFileButtonLoad; 
 		GetNode<Button>("Buttons/ViewFinder").Pressed += OnViewFinderButtonPress;
-		GetNode<HSlider>("VBoxContainer/HBoxContainer/DisplayedImage/SizeSlider").ValueChanged += OnSliderValueChanged;
+		GetNode<HSlider>("VBoxContainer/HBoxContainer/DisplayedImage/SizeSlider").ValueChanged += OnSizeSliderValueChanged;
+		GetNode<HSlider>("VBoxContainer/HBoxContainer/DisplayedImage/XSlider").ValueChanged += OnXSliderValueChanged;
+		GetNode<HSlider>("VBoxContainer/HBoxContainer/DisplayedImage/YSlider").ValueChanged += OnYSliderValueChanged;
 	}
 
 
@@ -137,10 +142,27 @@ public partial class Main : Control
 		return;
 	}
 
-	private void OnSliderValueChanged(double value)
+	private void OnSizeSliderValueChanged(double value)
 	{
 		Vector2 val = new Vector2((float)value, (float)value);
 		GetNode<Camera2D>(import_viewport_path + "/Camera2D").Zoom = val;
 	}
+
+	private void OnXSliderValueChanged(double value)
+	{
+		Vector2 val = new Vector2((float)value, import_sprite.Offset.Y);
+		import_sprite.Offset = val;
+		Vector2 x = new Vector2(128, 0);
+		//import_camera.Offset = val + x;
+	}
+
+	private void OnYSliderValueChanged(double value)
+	{
+		Vector2 val = new Vector2(import_sprite.Offset.X, (float)value);
+		import_sprite.Offset = val;
+		Vector2 y = new Vector2(0, 128);
+		//import_camera.Offset = val + y;
+	}
+	
 	
 }
