@@ -153,8 +153,9 @@ public partial class Main : Control
 	private void OnXSliderValueChanged(double value)
 	{
 		Vector2 val = new Vector2((float)value, import_sprite.Offset.Y);
-		import_sprite.Offset = val;
-		Vector2 x = new Vector2(128, 0);
+		//import_sprite.Offset = val;
+		//Vector2 x = new Vector2(128, 0);
+		import_sprite.RotationDegrees = (float)value;
 		//import_camera.Offset = val + x;
 	}
 

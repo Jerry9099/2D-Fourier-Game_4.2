@@ -109,7 +109,7 @@ value = 1.0
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
-text = "Input X Offset
+text = "Rotation
 "
 
 [node name="XSlider" type="HSlider" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
@@ -123,7 +123,7 @@ value = 1.0
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
-text = "Input Y Offset
+text = "Y Offset
 "
 
 [node name="YSlider" type="HSlider" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
