@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://ceebp1wmffcbf"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-66, -51)
+polygon = PackedVector2Array(8, 2, 55, 110, 148, 38)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D"]

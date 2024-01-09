@@ -64,6 +64,8 @@ handle_input_locally = false
 size = Vector2i(256, 256)
 render_target_update_mode = 4
 
+[node name="DrawParent" type="Node2D" parent="VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport"]
+
 [node name="BackGroundTexture" type="Sprite2D" parent="VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport"]
 position = Vector2(-2560, -2560)
 scale = Vector2(16, 16)
