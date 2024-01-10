@@ -16,7 +16,7 @@ public partial class Main : Control
 	TextureRect fft = new TextureRect();
 	//static String movable_viewport_path = "MovableViewer/SubViewport";
 	static String import_viewport_path = "VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport";
-	static String import_sprite_path = import_viewport_path + "/InputTexture"; 
+	static String import_sprite_path = import_viewport_path + "/DrawParent/InputTexture"; 
 	static String viewport_path = import_viewport_path;
 
 	// Called when the node enters the scene tree for the first time.
@@ -147,7 +147,8 @@ public partial class Main : Control
 	private void OnSizeSliderValueChanged(double value)
 	{
 		Vector2 val = new Vector2((float)value, (float)value);
-		GetNode<Camera2D>(import_viewport_path + "/Camera2D").Zoom = val;
+		//GetNode<Camera2D>(import_viewport_path + "/Camera2D").Zoom = val;
+		GetNode<Node2D>(import_viewport_path + "/DrawParent").Scale = val;
 	}
 
 	private void OnXSliderValueChanged(double value)
