@@ -18,6 +18,7 @@ public partial class Main : Control
 	static String import_viewport_path = "VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport";
 	static String import_sprite_path = import_viewport_path + "/DrawParent/InputTexture"; 
 	static String viewport_path = import_viewport_path;
+	static String fft_viewport_path = "VBoxContainer/HBoxContainer/FFT/SubViewportContainer/SubViewport";
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -25,7 +26,7 @@ public partial class Main : Control
 		file_dialog = GetNode<FileDialog>("FileDialog");
 		import_sprite = GetNode<Sprite2D>(import_sprite_path);
 		fft = GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/SubViewportContainer/SubViewport/FFT");
-		ifft = GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/IFFT");
+		ifft = GetNode<TextureRect>("VBoxContainer/HBoxContainer/DisplayedImage/IFFT");
 
 		file_dialog.FileSelected += OnFileSelected; 
 		GetNode<Button>("Buttons/Upload").Pressed += OnFileButtonLoad; 
@@ -43,6 +44,8 @@ public partial class Main : Control
 		//Image importImage = new Image();
 		Generate_FFT(importImage);
 		//get_node("FFT_Display").texture = ImageTexture.create_from_image(dynImage);
+		Image fftImage = GetNode<SubViewport>(fft_viewport_path).GetTexture().GetImage();
+		Generate_IFFT(fftImage);
 	}
 
 	public void Generate_FFT(Image importImage)
@@ -116,6 +119,79 @@ public partial class Main : Control
 
 		//set FFT Texture to final image
 		fft.Texture = ImageTexture.CreateFromImage(outImage);
+	}
+
+	public void Generate_IFFT(Image importImage)
+	{
+		//convert Image data to array of Complex objects
+		Image outImage = new Image();
+		outImage.CopyFrom(importImage); //create new outIm
+		int N = importImage.GetWidth();
+		Complex[,] data = new Complex[N, N];
+		for (int i = 0; i < N; i++)
+		{
+			for (int j = 0; j < N; j++)
+			{
+				float v = (importImage.GetPixel(i, j).R + importImage.GetPixel(i, j).G + importImage.GetPixel(i, j).B) / 3;  //avg, NOOB greyscale - IMPROVE?
+				data[i, j] = new AForge.Math.Complex(v*255, 0);  //SCALE UP LATER? precision limited?
+				//GD.Print(data[i, j]);
+			}
+		}
+		//perform FFT2 in place**************************************************
+		FourierTransform.FFT2(data, FourierTransform.Direction.Forward); 
+		//***********************************************************************
+
+		// set results into Image - ORIGINAL, UNSHIFTED
+		// for (int i = 0; i < N; i++)
+		// {
+		// 	for (int j = 0; j < N; j++)
+		// 	{
+		// 		float a = 10*(float)data[i, j].Re;
+		// 		Color c = new Color(a, a, a);
+		// 		outImage.SetPixel(i, j, c);
+		// 		//GD.Print(a);
+		// 	}
+		// }
+
+		// //set results into Image - SHIFTED
+
+		int mag = 2;
+		for (int i = 0; i < N/2; i++)  //left half
+		{
+			for (int j = 0; j < N/2; j++) //top left half
+			{
+				float a = mag*(float)data[j,i].Magnitude;
+				Color c = new Color(a, a, a);
+				outImage.SetPixel(N/2-i-1, N/2-j-1, c);
+			}
+
+			for (int j = N-1; j > N/2-1; j--) //bottom left half
+			{
+				float a = mag*(float)data[j, i].Magnitude;
+				Color c = new Color(a, a, a);
+				outImage.SetPixel(N/2-i-1, N-j-1+ N/2, c);
+			}
+		}
+
+		for (int i = N-1; i > N/2-1; i--)  //left half
+		{
+			for (int j = 0; j < N/2; j++) //top left half
+			{
+				float a = mag*(float)data[j,i].Magnitude;
+				Color c = new Color(a, a, a);
+				outImage.SetPixel(N-i-1 + N/2, N/2-j-1, c);
+			}
+
+			for (int j = N-1; j > N/2-1; j--) //bottom left half
+			{
+				float a = mag*(float)data[j, i].Magnitude;
+				Color c = new Color(a, a, a);
+				outImage.SetPixel(N-i-1 + N/2, N-j-1+ N/2, c);
+			}
+		}
+
+		//set FFT Texture to final image
+		ifft.Texture = ImageTexture.CreateFromImage(outImage);
 	}
 
 
