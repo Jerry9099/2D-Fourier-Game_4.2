@@ -12,8 +12,8 @@ public partial class Main : Control
 {	
 	FileDialog file_dialog = new FileDialog();
 	Sprite2D import_sprite = new Sprite2D();
-	Camera2D import_camera = new Camera2D();
 	TextureRect fft = new TextureRect();
+	TextureRect ifft = new TextureRect();
 	//static String movable_viewport_path = "MovableViewer/SubViewport";
 	static String import_viewport_path = "VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport";
 	static String import_sprite_path = import_viewport_path + "/DrawParent/InputTexture"; 
@@ -24,15 +24,15 @@ public partial class Main : Control
 	{
 		file_dialog = GetNode<FileDialog>("FileDialog");
 		import_sprite = GetNode<Sprite2D>(import_sprite_path);
-		import_camera = GetNode<Camera2D>(import_viewport_path + "/Camera2D");
-		fft = GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/FFT");
+		fft = GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/SubViewportContainer/SubViewport/FFT");
+		ifft = GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/IFFT");
 
 		file_dialog.FileSelected += OnFileSelected; 
 		GetNode<Button>("Buttons/Upload").Pressed += OnFileButtonLoad; 
 		GetNode<Button>("Buttons/ViewFinder").Pressed += OnViewFinderButtonPress;
-		GetNode<HSlider>("VBoxContainer/HBoxContainer/DisplayedImage/SizeSlider").ValueChanged += OnSizeSliderValueChanged;
-		GetNode<HSlider>("VBoxContainer/HBoxContainer/DisplayedImage/XSlider").ValueChanged += OnXSliderValueChanged;
-		GetNode<HSlider>("VBoxContainer/HBoxContainer/DisplayedImage/YSlider").ValueChanged += OnYSliderValueChanged;
+		GetNode<HSlider>("Controls/SizeSlider").ValueChanged += OnSizeSliderValueChanged;
+		GetNode<HSlider>("Controls/XSlider").ValueChanged += OnXSliderValueChanged;
+		GetNode<HSlider>("Controls/YSlider").ValueChanged += OnYSliderValueChanged;
 	}
 
 

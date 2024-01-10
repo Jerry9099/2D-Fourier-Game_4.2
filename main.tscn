@@ -25,34 +25,85 @@ grow_vertical = 2
 color = Color(0.0705882, 0.141176, 0.239216, 1)
 metadata/_edit_use_anchors_ = true
 
+[node name="Controls" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 67.0
+offset_top = 134.0
+offset_right = 271.0
+offset_bottom = 311.0
+theme_override_constants/separation = 7
+
+[node name="SizeSliderLabel" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "Size"
+
+[node name="SizeSlider" type="HSlider" parent="Controls"]
+layout_mode = 2
+min_value = 0.05
+max_value = 16.0
+step = 0.05
+value = 1.0
+
+[node name="XSliderLabel" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "Rotation
+"
+
+[node name="XSlider" type="HSlider" parent="Controls"]
+layout_mode = 2
+min_value = -256.0
+max_value = 256.0
+step = 0.05
+value = 1.0
+
+[node name="YSliderLabel" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "Y Offset
+"
+
+[node name="YSlider" type="HSlider" parent="Controls"]
+layout_mode = 2
+min_value = -256.0
+max_value = 256.0
+step = 0.05
+value = 1.0
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -553.0
+offset_top = -447.0
+offset_right = 553.0
+offset_bottom = 447.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 25
+theme_override_constants/separation = 85
 alignment = 1
+
+[node name="SpacerLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 460
+theme_override_constants/separation = 330
 
 [node name="DisplayedImage" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 20
-
-[node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 36
-text = "Original Image
-"
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
 layout_mode = 2
@@ -77,64 +128,28 @@ position = Vector2(128, 128)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_ikvu4")
 
-[node name="Camera2D" type="Camera2D" parent="VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport"]
-visible = false
-offset = Vector2(128, 128)
-
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Input
+theme_override_font_sizes/font_size = 22
+text = "Original Image
 "
 
-[node name="SpacerLabel" type="Label" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
+[node name="IFFT2" type="TextureRect" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
+custom_minimum_size = Vector2(320, 320)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_463h8")
 
-[node name="SpacerLabel2" type="Label" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
+[node name="Label5" type="Label" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "Reconstructed Image
 
-[node name="SizeSliderLabel" type="Label" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 20
-text = "Size"
 
-[node name="SizeSlider" type="HSlider" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
-layout_mode = 2
-min_value = 0.05
-max_value = 16.0
-step = 0.05
-value = 1.0
-
-[node name="XSliderLabel" type="Label" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 20
-text = "Rotation
 "
-
-[node name="XSlider" type="HSlider" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
-layout_mode = 2
-min_value = -256.0
-max_value = 256.0
-step = 0.05
-value = 1.0
-
-[node name="YSliderLabel" type="Label" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 20
-text = "Y Offset
-"
-
-[node name="YSlider" type="HSlider" parent="VBoxContainer/HBoxContainer/DisplayedImage"]
-layout_mode = 2
-min_value = -256.0
-max_value = 256.0
-step = 0.05
-value = 1.0
 
 [node name="FFT" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -142,15 +157,20 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 20
 
-[node name="Label4" type="Label" parent="VBoxContainer/HBoxContainer/FFT"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HBoxContainer/FFT"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 36
-text = "Fourier Transform"
+size_flags_vertical = 4
 
-[node name="FFT" type="TextureRect" parent="VBoxContainer/HBoxContainer/FFT"]
-custom_minimum_size = Vector2(384, 384)
-layout_mode = 2
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/HBoxContainer/FFT/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(320, 320)
+render_target_update_mode = 4
+
+[node name="FFT" type="TextureRect" parent="VBoxContainer/HBoxContainer/FFT/SubViewportContainer/SubViewport"]
+custom_minimum_size = Vector2(320, 320)
+offset_right = 320.0
+offset_bottom = 320.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("2_463h8")
@@ -158,7 +178,24 @@ texture = ExtResource("2_463h8")
 [node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/FFT"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
 text = "FFT
+
+"
+
+[node name="IFFT" type="TextureRect" parent="VBoxContainer/HBoxContainer/FFT"]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_463h8")
+
+[node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer/FFT"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "IFFT
+
 
 "
 
