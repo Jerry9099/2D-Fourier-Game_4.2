@@ -36,6 +36,10 @@ public partial class Main : Control
 		GetNode<HSlider>("Controls/SizeSlider").ValueChanged += OnSizeSliderValueChanged;
 		GetNode<HSlider>("Controls/XSlider").ValueChanged += OnXSliderValueChanged;
 		GetNode<HSlider>("Controls/YSlider").ValueChanged += OnYSliderValueChanged;
+
+		//DEBUG
+		//ImageTexture PaintTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://icon.svg"));
+		//ifft.Texture = PaintTexture;
 	}
 
 
