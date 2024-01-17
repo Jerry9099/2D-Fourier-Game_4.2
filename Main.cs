@@ -16,6 +16,9 @@ public partial class Main : Control
 	Sprite2D import_sprite = new Sprite2D();
 	TextureRect fft = new TextureRect();
 	TextureRect ifft = new TextureRect();
+	TextureRect ifft_mask = new TextureRect();
+	SubViewport ifft_viewport = new SubViewport();
+	ImageTexture black_texture = new ImageTexture();
 	//static String movable_viewport_path = "MovableViewer/SubViewport";
 	static String import_viewport_path = "VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport";
 	static String import_sprite_path = import_viewport_path + "/DrawParent/InputTexture"; 
@@ -29,7 +32,11 @@ public partial class Main : Control
 		import_sprite = GetNode<Sprite2D>(import_sprite_path);
 		fft = GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/SubViewportContainer/SubViewport/FFT");
 		ifft = GetNode<TextureRect>("VBoxContainer/HBoxContainer/DisplayedImage/IFFT");
+		ifft_mask = GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/IFFTContainer/SubViewport/IFFTMask");
+		ifft_viewport = GetNode<SubViewport>("VBoxContainer/HBoxContainer/FFT/IFFTContainer/SubViewport");
+		black_texture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://fill.png"));
 
+		//connect Signals
 		file_dialog.FileSelected += OnFileSelected; 
 		GetNode<Button>("Buttons/Upload").Pressed += OnFileButtonLoad; 
 		GetNode<Button>("Buttons/ViewFinder").Pressed += OnViewFinderButtonPress;
@@ -208,16 +215,8 @@ public partial class Main : Control
 
 	private void OnViewFinderButtonPress()
 	{
-		//if ( viewport_path.Equals(movable_viewport_path) )
-		//{
-		//	viewport_path = import_viewport_path;
-		//}
-
-		//else
-		//{
-		//d	viewport_path = movable_viewport_path;
-		//}
-		return;
+		ifft_viewport.RenderTargetClearMode = SubViewport.ClearMode.Once;
+		//ifft_mask.Texture = black_texture;
 	}
 
 	private void OnSizeSliderValueChanged(double value)

@@ -226,7 +226,7 @@ text = "Upload Image"
 
 [node name="ViewFinder" type="Button" parent="Buttons"]
 layout_mode = 2
-text = "Toggle Viewfinder"
+text = "Clear Mask"
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"

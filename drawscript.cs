@@ -6,11 +6,17 @@ public partial class drawscript : TextureRect
 	// Called when the node enters the scene tree for the first time.
 	bool can_draw = false;
 	ImageTexture PaintTexture;
+	ImageTexture EraseTexture;
+	ImageTexture BlackTexture; //needed?
+	ImageTexture ClearTexture;
 	public override void _Ready()
 	{
 		MouseEntered += OnMouseEntered;
 		MouseExited += OnMouseExited;
 		PaintTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://spot.png"));
+		EraseTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://spot_dark.png"));
+		BlackTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://fill.png"));
+		ClearTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://clear.png"));
 
 	}
 
@@ -22,6 +28,11 @@ public partial class drawscript : TextureRect
 
 	public override void _Draw()
 	{
+		// if (this.Texture != ClearTexture)
+		// {
+		// 	this.Texture = ClearTexture;
+		// }
+
 		if(can_draw && Input.IsActionPressed("ui_select"))
 		{
 			Vector2 offset = new Vector2(-32, -32);
@@ -29,6 +40,16 @@ public partial class drawscript : TextureRect
 			Vector2 size = new Vector2(64, 64);
 			Rect2 rect = new Rect2(pos, size);
 			DrawTextureRect(PaintTexture, rect , false);
+			GD.Print("Paint: " + GetViewport().GetMousePosition());
+		}
+
+		else if (can_draw && Input.IsActionPressed("ui_cancel"))
+		{
+			Vector2 offset = new Vector2(-32, -32);
+			Vector2 pos = GetViewport().GetMousePosition() + offset;
+			Vector2 size = new Vector2(64, 64);
+			Rect2 rect = new Rect2(pos, size);
+			DrawTextureRect(EraseTexture, rect , false);
 			GD.Print("Paint: " + GetViewport().GetMousePosition());
 		}
 	}
