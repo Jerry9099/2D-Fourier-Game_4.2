@@ -40,7 +40,6 @@ public partial class drawscript : TextureRect
 			Vector2 size = new Vector2(64, 64);
 			Rect2 rect = new Rect2(pos, size);
 			DrawTextureRect(PaintTexture, rect , false);
-			GD.Print("Paint: " + GetViewport().GetMousePosition());
 		}
 
 		else if (can_draw && Input.IsActionPressed("ui_cancel"))
@@ -50,19 +49,16 @@ public partial class drawscript : TextureRect
 			Vector2 size = new Vector2(64, 64);
 			Rect2 rect = new Rect2(pos, size);
 			DrawTextureRect(EraseTexture, rect , false);
-			GD.Print("Paint: " + GetViewport().GetMousePosition());
 		}
 	}
 
 	public void OnMouseEntered()
 	{
 		can_draw = true;
-		GD.Print("can_draw: " + can_draw);
 	}
 
 	public void OnMouseExited()
 	{
 		can_draw = false;
-		GD.Print("can_draw: " + can_draw);
 	}
 }
