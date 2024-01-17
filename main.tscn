@@ -193,11 +193,10 @@ size = Vector2i(256, 256)
 render_target_clear_mode = 1
 
 [node name="IFFTMask" type="TextureRect" parent="VBoxContainer/HBoxContainer/FFT/IFFTContainer/SubViewport"]
-offset_right = 256.0
-offset_bottom = 256.0
+offset_right = 512.0
+offset_bottom = 512.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("2_463h8")
 script = ExtResource("5_06ckm")
 
 [node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer/FFT"]

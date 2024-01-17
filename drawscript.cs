@@ -10,7 +10,7 @@ public partial class drawscript : TextureRect
 	{
 		MouseEntered += OnMouseEntered;
 		MouseExited += OnMouseExited;
-		PaintTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://icon.svg"));
+		PaintTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://spot.png"));
 
 	}
 
@@ -24,7 +24,8 @@ public partial class drawscript : TextureRect
 	{
 		if(can_draw && Input.IsActionPressed("ui_select"))
 		{
-			Vector2 pos = GetViewport().GetMousePosition();
+			Vector2 offset = new Vector2(-32, -32);
+			Vector2 pos = GetViewport().GetMousePosition() + offset;
 			Vector2 size = new Vector2(64, 64);
 			Rect2 rect = new Rect2(pos, size);
 			DrawTextureRect(PaintTexture, rect , false);
