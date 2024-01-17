@@ -10,6 +10,8 @@ using System.IO;
 
 public partial class Main : Control
 {	
+	static int N_DEFAULT = 256;
+	Complex[,] xfmed_data = new Complex[N_DEFAULT, N_DEFAULT];
 	FileDialog file_dialog = new FileDialog();
 	Sprite2D import_sprite = new Sprite2D();
 	TextureRect fft = new TextureRect();
@@ -44,8 +46,8 @@ public partial class Main : Control
 		//Image importImage = new Image();
 		Generate_FFT(importImage);
 		//get_node("FFT_Display").texture = ImageTexture.create_from_image(dynImage);
-		Image fftImage = GetNode<SubViewport>(fft_viewport_path).GetTexture().GetImage();
-		Generate_IFFT(fftImage);
+		//Image fftImage = GetNode<SubViewport>(fft_viewport_path).GetTexture().GetImage();
+		Generate_IFFT(importImage, xfmed_data);
 	}
 
 	public void Generate_FFT(Image importImage)
@@ -66,6 +68,7 @@ public partial class Main : Control
 		}
 		//perform FFT2 in place**************************************************
 		FourierTransform.FFT2(data, FourierTransform.Direction.Forward); 
+		xfmed_data = data; //copy to main-wide var
 		//***********************************************************************
 
 		// set results into Image - ORIGINAL, UNSHIFTED
@@ -121,74 +124,67 @@ public partial class Main : Control
 		fft.Texture = ImageTexture.CreateFromImage(outImage);
 	}
 
-	public void Generate_IFFT(Image importImage)
+	public void Generate_IFFT(Image importImage, Complex[,] xfmed_data)
 	{
 		//convert Image data to array of Complex objects
 		Image outImage = new Image();
 		outImage.CopyFrom(importImage); //create new outIm
 		int N = importImage.GetWidth();
 		Complex[,] data = new Complex[N, N];
+
+		//perform FFT2 in place**************************************************
+		FourierTransform.FFT2(xfmed_data, FourierTransform.Direction.Backward); 
+		//***********************************************************************
+
+		// set results into Image - ORIGINAL, UNSHIFTED
+		int mag = 2;
 		for (int i = 0; i < N; i++)
 		{
 			for (int j = 0; j < N; j++)
 			{
-				float v = (importImage.GetPixel(i, j).R + importImage.GetPixel(i, j).G + importImage.GetPixel(i, j).B) / 3;  //avg, NOOB greyscale - IMPROVE?
-				data[i, j] = new AForge.Math.Complex(v*255, 0);  //SCALE UP LATER? precision limited?
-				//GD.Print(data[i, j]);
+				float a = mag*(float)xfmed_data[i, j].Magnitude;
+				Color c = new Color(a, a, a);
+				outImage.SetPixel(i, j, c);
+				//GD.Print(a);
 			}
 		}
-		//perform FFT2 in place**************************************************
-		FourierTransform.FFT2(data, FourierTransform.Direction.Forward); 
-		//***********************************************************************
-
-		// set results into Image - ORIGINAL, UNSHIFTED
-		// for (int i = 0; i < N; i++)
-		// {
-		// 	for (int j = 0; j < N; j++)
-		// 	{
-		// 		float a = 10*(float)data[i, j].Re;
-		// 		Color c = new Color(a, a, a);
-		// 		outImage.SetPixel(i, j, c);
-		// 		//GD.Print(a);
-		// 	}
-		// }
 
 		// //set results into Image - SHIFTED
 
-		int mag = 2;
-		for (int i = 0; i < N/2; i++)  //left half
-		{
-			for (int j = 0; j < N/2; j++) //top left half
-			{
-				float a = mag*(float)data[j,i].Magnitude;
-				Color c = new Color(a, a, a);
-				outImage.SetPixel(N/2-i-1, N/2-j-1, c);
-			}
+		// int mag = 2;
+		// for (int i = 0; i < N/2; i++)  //left half
+		// {
+		// 	for (int j = 0; j < N/2; j++) //top left half
+		// 	{
+		// 		float a = mag*(float)xfmed_data[j,i].Magnitude;
+		// 		Color c = new Color(a, a, a);
+		// 		outImage.SetPixel(N/2-i-1, N/2-j-1, c);
+		// 	}
 
-			for (int j = N-1; j > N/2-1; j--) //bottom left half
-			{
-				float a = mag*(float)data[j, i].Magnitude;
-				Color c = new Color(a, a, a);
-				outImage.SetPixel(N/2-i-1, N-j-1+ N/2, c);
-			}
-		}
+		// 	for (int j = N-1; j > N/2-1; j--) //bottom left half
+		// 	{
+		// 		float a = mag*(float)xfmed_data[j, i].Magnitude;
+		// 		Color c = new Color(a, a, a);
+		// 		outImage.SetPixel(N/2-i-1, N-j-1+ N/2, c);
+		// 	}
+		// }
 
-		for (int i = N-1; i > N/2-1; i--)  //left half
-		{
-			for (int j = 0; j < N/2; j++) //top left half
-			{
-				float a = mag*(float)data[j,i].Magnitude;
-				Color c = new Color(a, a, a);
-				outImage.SetPixel(N-i-1 + N/2, N/2-j-1, c);
-			}
+		// for (int i = N-1; i > N/2-1; i--)  //left half
+		// {
+		// 	for (int j = 0; j < N/2; j++) //top left half
+		// 	{
+		// 		float a = mag*(float)xfmed_data[j,i].Magnitude;
+		// 		Color c = new Color(a, a, a);
+		// 		outImage.SetPixel(N-i-1 + N/2, N/2-j-1, c);
+		// 	}
 
-			for (int j = N-1; j > N/2-1; j--) //bottom left half
-			{
-				float a = mag*(float)data[j, i].Magnitude;
-				Color c = new Color(a, a, a);
-				outImage.SetPixel(N-i-1 + N/2, N-j-1+ N/2, c);
-			}
-		}
+		// 	for (int j = N-1; j > N/2-1; j--) //bottom left half
+		// 	{
+		// 		float a = mag*(float)xfmed_data[j, i].Magnitude;
+		// 		Color c = new Color(a, a, a);
+		// 		outImage.SetPixel(N-i-1 + N/2, N-j-1+ N/2, c);
+		// 	}
+		// }
 
 		//set FFT Texture to final image
 		ifft.Texture = ImageTexture.CreateFromImage(outImage);
