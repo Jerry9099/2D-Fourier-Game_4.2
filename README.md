@@ -7,7 +7,7 @@ https://github.com/Jerry9099/2D-Fourier-Game_4.2/assets/93056988/75939246-51c2-4
 
 
 
-If you want to just run it, download the zip and extract, and double click the .exe. Make sure all the unzipped files are in the same folder!
+If you want to just run it, download the WINDOWS DOWNLOAD zip and extract, and double click the .exe. Make sure all the unzipped files are in the same folder!
 
 Made in Godot .NET 4.2
 
