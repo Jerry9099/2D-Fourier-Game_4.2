@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c0m02lx8spt6v"]
 
 [ext_resource type="Script" path="res://DiffractionPage.cs" id="1_ue0s0"]
-[ext_resource type="Texture2D" uid="uid://cfxm64l7ytuma" path="res://Sample Patterns (choose from here!)/fill.png" id="2_yxka4"]
+[ext_resource type="Texture2D" uid="uid://cfxm64l7ytuma" path="res://fill.png" id="2_yxka4"]
 [ext_resource type="Texture2D" uid="uid://dh2ok66obb77m" path="res://bandpass_square.png" id="3_rp6dx"]
 [ext_resource type="Texture2D" uid="uid://dwtpyyu3qcrso" path="res://fill - 256.png" id="4_rl547"]
 

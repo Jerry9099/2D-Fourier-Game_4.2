@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgrtrpab5x1ki"
-path="res://.godot/imported/highpass_square.png-df6430ea415f849f95a2aa69f5d89ba0.ctex"
+uid="uid://bjtcn465fuij5"
+path="res://.godot/imported/spot.png-36b4dfbff4efeea17ec3137d266ffc4a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sample Patterns (choose from here!)/highpass_square.png"
-dest_files=["res://.godot/imported/highpass_square.png-df6430ea415f849f95a2aa69f5d89ba0.ctex"]
+source_file="res://spot.png"
+dest_files=["res://.godot/imported/spot.png-36b4dfbff4efeea17ec3137d266ffc4a.ctex"]
 
 [params]
 

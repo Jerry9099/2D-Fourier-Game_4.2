@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjtcn465fuij5"
-path="res://.godot/imported/spot.png-dddcb04dc53b1cc0a645f8e8506b3aa6.ctex"
+uid="uid://br7sdplsv81x1"
+path="res://.godot/imported/spot_dark.png-d075e40b956b4a22943fa767fc0ff4d7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sample Patterns (choose from here!)/spot.png"
-dest_files=["res://.godot/imported/spot.png-dddcb04dc53b1cc0a645f8e8506b3aa6.ctex"]
+source_file="res://spot_dark.png"
+dest_files=["res://.godot/imported/spot_dark.png-d075e40b956b4a22943fa767fc0ff4d7.ctex"]
 
 [params]
 

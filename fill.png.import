@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfxm64l7ytuma"
-path="res://.godot/imported/fill.png-d4754734943d2d54d06fe893b7787d30.ctex"
+path="res://.godot/imported/fill.png-ca8f1211fcf60d24aebdb24b7c8d7b65.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sample Patterns (choose from here!)/fill.png"
-dest_files=["res://.godot/imported/fill.png-d4754734943d2d54d06fe893b7787d30.ctex"]
+source_file="res://fill.png"
+dest_files=["res://.godot/imported/fill.png-ca8f1211fcf60d24aebdb24b7c8d7b65.ctex"]
 
 [params]
 
