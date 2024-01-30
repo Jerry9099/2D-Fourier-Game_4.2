@@ -95,7 +95,6 @@ public partial class Main : Control
 		// }
 
 		// //set results into Image - SHIFTED
-
 		int mag = 2;
 		for (int i = 0; i < N/2; i++)  //left half
 		{
@@ -152,6 +151,39 @@ public partial class Main : Control
 				//GD.Print(v);
 			}
 		}
+
+		//perform FFT2 in place - SHIFTED***************************************
+		// Complex[,] xfmed_data = data;
+		// for (int i = 0; i < N/2; i++)  //left half
+		// {
+		// 	for (int j = 0; j < N/2; j++) //top left half
+		// 	{
+		// 		double v = (mask_image.GetPixel(j, i).R + mask_image.GetPixel(j, i).G + mask_image.GetPixel(j, i).B) / 3; 
+		// 		xfmed_data[j, i] = Complex.Multiply(data[N/2-i-1, N/2-j-1], v);
+		// 	}
+
+		// 	for (int j = N-1; j > N/2-1; j--) //bottom left half
+		// 	{
+		// 		double v = (mask_image.GetPixel(j, i).R + mask_image.GetPixel(j, i).G + mask_image.GetPixel(j, i).B) / 3; 
+		// 		xfmed_data[j, i] = Complex.Multiply(data[N/2-i-1, N-j-1+ N/2], v);
+		// 	}
+		// }
+
+		// for (int i = N-1; i > N/2-1; i--)  //left half
+		// {
+		// 	for (int j = 0; j < N/2; j++) //top left half
+		// 	{
+		// 		double v = (mask_image.GetPixel(j, i).R + mask_image.GetPixel(j, i).G + mask_image.GetPixel(j, i).B) / 3; 
+		// 		xfmed_data[j, i] = Complex.Multiply(data[N-i-1 + N/2, N/2-j-1], v);
+		// 	}
+
+		// 	for (int j = N-1; j > N/2-1; j--) //bottom left half
+		// 	{
+		// 		double v = (mask_image.GetPixel(j, i).R + mask_image.GetPixel(j, i).G + mask_image.GetPixel(j, i).B) / 3; 
+		// 		xfmed_data[j, i] = Complex.Multiply(data[N-i-1 + N/2, N-j-1+ N/2], v);
+		// 	}
+		// }
+
 		FourierTransform.FFT2(data, FourierTransform.Direction.Backward); 
 		//***********************************************************************
 		// set results into Image - ORIGINAL, UNSHIFTED
