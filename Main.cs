@@ -140,50 +140,53 @@ public partial class Main : Control
 		Image outImage = new Image();
 		outImage.CopyFrom(importImage); //create new outIm
 		int N = importImage.GetWidth();
-		//perform FFT2 in place**************************************************
+
+		//scale by mask values
 		Image mask_image = ifft_viewport.GetTexture().GetImage();
-		for (int i = 0; i < N; i++)
+
+		//APPLY MASK - ORIGINAL
+		// for (int i = 0; i < N; i++)
+		// {
+		// 	for (int j = 0; j < N; j++)
+		// 	{
+		// 		double v = (mask_image.GetPixel(i, j).R + mask_image.GetPixel(i, j).G + mask_image.GetPixel(i, j).B) / 3; 
+		// 		data[i, j] = Complex.Multiply(data[i, j], v);
+		// 		//GD.Print(v);
+		// 	}
+		// }
+
+		//APPLY MASK - RETILED
+		for (int i = 0; i < N/2; i++)  //left half
 		{
-			for (int j = 0; j < N; j++)
+			for (int j = 0; j < N/2; j++) //top left half
 			{
-				double v = (mask_image.GetPixel(i, j).R + mask_image.GetPixel(i, j).G + mask_image.GetPixel(i, j).B) / 3; 
+				double v = (mask_image.GetPixel(N/2-1-i, N/2-1-j).R + mask_image.GetPixel(N/2-1-i, N/2-1-j).G + mask_image.GetPixel(N/2-1-i, N/2-1-j).B) / 3; 
 				data[i, j] = Complex.Multiply(data[i, j], v);
-				//GD.Print(v);
+			}
+
+			for (int j = N/2; j < N; j++) //bottom left half
+			{
+				double v = (mask_image.GetPixel(N/2-1-i, N-1-j+N/2).R + mask_image.GetPixel(N/2-1-i, N-1-j+N/2).G + mask_image.GetPixel(N/2-1-i, N-1-j+N/2).B) / 3; 
+				data[i, j] = Complex.Multiply(data[i, j], v);
 			}
 		}
 
-		//perform FFT2 in place - SHIFTED***************************************
-		// Complex[,] xfmed_data = data;
-		// for (int i = 0; i < N/2; i++)  //left half
-		// {
-		// 	for (int j = 0; j < N/2; j++) //top left half
-		// 	{
-		// 		double v = (mask_image.GetPixel(j, i).R + mask_image.GetPixel(j, i).G + mask_image.GetPixel(j, i).B) / 3; 
-		// 		xfmed_data[j, i] = Complex.Multiply(data[N/2-i-1, N/2-j-1], v);
-		// 	}
+		for (int i = N/2; i < N; i++)  //right half
+		{
+			for (int j = 0; j < N/2; j++) //top right half
+			{
+				double v = (mask_image.GetPixel(N-1-i+N/2, N/2-1-j).R + mask_image.GetPixel(N-1-i+N/2, N/2-1-j).G + mask_image.GetPixel(N-1-i+N/2, N/2-1-j).B) / 3; 
+				data[i, j] = Complex.Multiply(data[i, j], v);
+			}
 
-		// 	for (int j = N-1; j > N/2-1; j--) //bottom left half
-		// 	{
-		// 		double v = (mask_image.GetPixel(j, i).R + mask_image.GetPixel(j, i).G + mask_image.GetPixel(j, i).B) / 3; 
-		// 		xfmed_data[j, i] = Complex.Multiply(data[N/2-i-1, N-j-1+ N/2], v);
-		// 	}
-		// }
+			for (int j = N/2; j < N; j++) //bottom right half
+			{
+				double v = (mask_image.GetPixel(N-1-i+N/2, N-1-j+N/2).R + mask_image.GetPixel(N-1-i+N/2, N-1-j+N/2).G + mask_image.GetPixel(N-1-i+N/2, N-1-j+N/2).B) / 3; 
+				data[i, j] = Complex.Multiply(data[i, j], v);
+			}
+		}
 
-		// for (int i = N-1; i > N/2-1; i--)  //left half
-		// {
-		// 	for (int j = 0; j < N/2; j++) //top left half
-		// 	{
-		// 		double v = (mask_image.GetPixel(j, i).R + mask_image.GetPixel(j, i).G + mask_image.GetPixel(j, i).B) / 3; 
-		// 		xfmed_data[j, i] = Complex.Multiply(data[N-i-1 + N/2, N/2-j-1], v);
-		// 	}
-
-		// 	for (int j = N-1; j > N/2-1; j--) //bottom left half
-		// 	{
-		// 		double v = (mask_image.GetPixel(j, i).R + mask_image.GetPixel(j, i).G + mask_image.GetPixel(j, i).B) / 3; 
-		// 		xfmed_data[j, i] = Complex.Multiply(data[N-i-1 + N/2, N-j-1+ N/2], v);
-		// 	}
-		// }
-
+		//perform IFFT2 in place**************************************************
 		FourierTransform.FFT2(data, FourierTransform.Direction.Backward); 
 		//***********************************************************************
 		// set results into Image - ORIGINAL, UNSHIFTED
@@ -216,8 +219,11 @@ public partial class Main : Control
 
 	private void OnViewFinderButtonPress()
 	{
-		ifft_viewport.RenderTargetClearMode = SubViewport.ClearMode.Once;
-		//ifft_mask.Texture = black_texture;
+		//ifft_viewport.RenderTargetClearMode = SubViewport.ClearMode.Once;
+		ifft_mask.Texture = black_texture;
+		//ifft_viewport.RenderTargetClearMode = SubViewport.ClearMode.Never;
+		//WHY IS IT NOT PERSISTENT AFTER RESET?
+		GD.Print("MASK RESET");
 	}
 
 	private void OnSizeSliderValueChanged(double value)
