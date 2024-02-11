@@ -8,7 +8,7 @@ public partial class drawscript : TextureRect
 	ImageTexture PaintTexture;
 	ImageTexture EraseTexture;
 	ImageTexture BlackTexture; //needed?
-	ImageTexture ClearTexture;
+	//ImageTexture ClearTexture;
 	public override void _Ready()
 	{
 		MouseEntered += OnMouseEntered;
@@ -16,7 +16,7 @@ public partial class drawscript : TextureRect
 		PaintTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://spot.png"));
 		EraseTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://spot_dark.png"));
 		BlackTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://fill.png"));
-		ClearTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://clear.png"));
+		//ClearTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://clear.png"));
 
 	}
 

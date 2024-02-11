@@ -7,18 +7,27 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 
 public partial class Main : Control
 {	
 	static int N_DEFAULT = 256;
 	//Complex[,] xfmed_data = new Complex[N_DEFAULT, N_DEFAULT];
+	static int NUM_INPUT_TEXTURES = 4;
+	ImageTexture[] input_textures = new ImageTexture[NUM_INPUT_TEXTURES];
+	int input_texture_index = 0;
 	FileDialog file_dialog = new FileDialog();
 	Sprite2D import_sprite = new Sprite2D();
 	TextureRect fft = new TextureRect();
 	TextureRect ifft = new TextureRect();
 	TextureRect ifft_mask = new TextureRect();
 	SubViewport ifft_viewport = new SubViewport();
-	ImageTexture black_texture = new ImageTexture();
+
+	ImageTexture black_texture = new ImageTexture();  //There's gotta be a better way to do this
+	ImageTexture lp_circle = new ImageTexture();
+	ImageTexture bp_texture = new ImageTexture();
+	ImageTexture lp_square = new ImageTexture();
+	ImageTexture hp_square = new ImageTexture();
 	Complex[,] data = new Complex[N_DEFAULT, N_DEFAULT];
 	//static String movable_viewport_path = "MovableViewer/SubViewport";
 	static String import_viewport_path = "VBoxContainer/HBoxContainer/DisplayedImage/SubViewportContainer/SubViewport";
@@ -36,6 +45,15 @@ public partial class Main : Control
 		ifft_mask = GetNode<TextureRect>("VBoxContainer/HBoxContainer/FFT/IFFTContainer/SubViewport/IFFTMask");
 		ifft_viewport = GetNode<SubViewport>("VBoxContainer/HBoxContainer/FFT/IFFTContainer/SubViewport");
 		black_texture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://fill.png"));
+		//input_textures.Append(black_texture);
+		bp_texture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://bandpass_square.png"));
+		input_textures.Append(bp_texture);
+		lp_square = ImageTexture.CreateFromImage(Image.LoadFromFile("res://lowpass_square.png"));
+		input_textures.Append(lp_square);
+		lp_circle = ImageTexture.CreateFromImage(Image.LoadFromFile("res://lowpass_circle.png"));
+		input_textures.Append(lp_circle);
+		hp_square = ImageTexture.CreateFromImage(Image.LoadFromFile("res://highpass_square.png"));
+		input_textures.Append(hp_square);
 
 		//connect Signals
 		file_dialog.FileSelected += OnFileSelected; 
@@ -44,7 +62,7 @@ public partial class Main : Control
 		GetNode<HSlider>("Controls/SizeSlider").ValueChanged += OnSizeSliderValueChanged;
 		GetNode<HSlider>("Controls/XSlider").ValueChanged += OnXSliderValueChanged;
 		GetNode<HSlider>("Controls/YSlider").ValueChanged += OnYSliderValueChanged;
-
+		GetNode<Button>("Buttons/Cycle").Pressed += OnCycleButtonPressed;
 		//DEBUG
 		//ImageTexture PaintTexture = ImageTexture.CreateFromImage(Image.LoadFromFile("res://icon.svg"));
 		//ifft.Texture = PaintTexture;
@@ -250,5 +268,12 @@ public partial class Main : Control
 		//import_camera.Offset = val + y;
 	}
 	
-	
+	private void OnCycleButtonPressed()
+	{
+		input_texture_index++;
+		if (input_texture_index >= NUM_INPUT_TEXTURES)
+			input_texture_index = 0;
+			
+		import_sprite.Texture = input_textures[input_texture_index];
+	}
 }

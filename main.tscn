@@ -222,6 +222,11 @@ offset_bottom = 51.0
 grow_horizontal = 2
 theme_override_constants/separation = 35
 
+[node name="Cycle" type="Button" parent="Buttons"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Change Image"
+
 [node name="Upload" type="Button" parent="Buttons"]
 layout_mode = 2
 size_flags_horizontal = 4
