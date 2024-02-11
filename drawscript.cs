@@ -32,22 +32,18 @@ public partial class drawscript : TextureRect
 		// {
 		// 	this.Texture = ClearTexture;
 		// }
+		Vector2 offset = new Vector2(-64, -64);
+		Vector2 pos = GetViewport().GetMousePosition() + offset;
+		Vector2 size = new Vector2(128, 128);
+		Rect2 rect = new Rect2(pos, size);
 
 		if(can_draw && Input.IsActionPressed("ui_select"))
 		{
-			Vector2 offset = new Vector2(-32, -32);
-			Vector2 pos = GetViewport().GetMousePosition() + offset;
-			Vector2 size = new Vector2(64, 64);
-			Rect2 rect = new Rect2(pos, size);
 			DrawTextureRect(PaintTexture, rect , false);
 		}
 
 		else if (can_draw && Input.IsActionPressed("ui_cancel"))
 		{
-			Vector2 offset = new Vector2(-32, -32);
-			Vector2 pos = GetViewport().GetMousePosition() + offset;
-			Vector2 size = new Vector2(64, 64);
-			Rect2 rect = new Rect2(pos, size);
 			DrawTextureRect(EraseTexture, rect , false);
 		}
 	}
